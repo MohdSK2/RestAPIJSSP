@@ -17,23 +17,15 @@
   },
   "host": "api.box.com",
   "basePath": "/2.0",
-  "schemes": [
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/files/{file_id}": {
       "get": {
         "operationId": "get_files_id",
         "summary": "Get file information",
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "description": "Retrieves the details about a file.",
         "parameters": [
           {
@@ -78,39 +70,37 @@
         "responses": {
           "200": {
             "description": "Returns a file object.\n\nNot all available fields are returned by default. Use the\n[fields](#param-fields) query parameter to explicitly request\nany specific fields.",
-              "$ref": "#/definitions/File"
+            "$ref": "#/definitions/File"
           },
           "304": {
             "description": "Returns an empty response when the `If-None-Match` header matches\nthe current `etag` value of the folder. This indicates that the folder\nhas not changed since it was last requested."
           },
           "401": {
             "description": "Returned when the access token provided in the `Authorization` header\nis not recognized or not provided.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "404": {
             "description": "Returned if the file is not found, or the user does not\nhave access to the file.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "405": {
             "description": "Returned if the `file_id` is not in a recognized format.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "415": {
             "description": "Returns an error if an action is performed on a file with an\nincorrect media type.\n\n* `unsupported_media_type` when requesting an `expiring_embed_link`\n  for a file that is not supported by Box Embed.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "default": {
             "description": "An unexpected client error.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           }
         }
       },
       "post": {
         "operationId": "post_files_id",
         "summary": "Restore file",
-        "tags": [
-          "Trashed files"
-        ],
+        "tags": ["Trashed files"],
         "description": "Restores a file that has been moved to the trash.\n\nAn optional new parent ID can be provided to restore the file to in case the\noriginal folder has been deleted.",
         "parameters": [
           {
@@ -164,32 +154,30 @@
         "responses": {
           "201": {
             "description": "Returns a file object when the file has been restored.",
-              "$ref": "#/definitions/File"
+            "$ref": "#/definitions/File"
           },
           "403": {
             "description": "Returns an error if the user does not have access to the folder\nthe file is being restored to, or the user does not have permission\nto restore files from the trash.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "404": {
             "description": "Returns an error if the file is not in the trash.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "409": {
             "description": "Returns an error if there is an file with the same name\nin the folder the file is being restored to.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "default": {
             "description": "An unexpected client error.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           }
         }
       },
       "put": {
         "operationId": "put_files_id",
         "summary": "Update file",
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "description": "Updates a file. This can be used to rename or move a file,\ncreate a shared link, or lock a file.",
         "parameters": [
           {
@@ -257,11 +245,7 @@
                         "access": {
                           "type": "string",
                           "description": "The level of access for the shared link. This can be\nrestricted to anyone with the link (`open`), only people\nwithin the company (`company`) and only those who\nhave been invited to the folder (`collaborators`).\n\nIf not set, this field defaults to the access level specified\nby the enterprise admin. To create a shared link with this\ndefault setting pass the `shared_link` object with\nno `access` field, for example `{ \"shared_link\": {} }`.\n\nThe `company` access level is only available to paid\naccounts.",
-                          "enum": [
-                            "open",
-                            "company",
-                            "collaborators"
-                          ]
+                          "enum": ["open", "company", "collaborators"]
                         },
                         "password": {
                           "type": "string",
@@ -295,16 +279,12 @@
                 "lock": {
                   "type": "object",
                   "description": "Defines a lock on an item. This prevents the item from being\nmoved, renamed, or otherwise changed by anyone other than the user\nwho created the lock.\n\nSet this to `null` to remove the lock.",
-                  "required": [
-                    "type"
-                  ],
+                  "required": ["type"],
                   "properties": {
                     "access": {
                       "type": "string",
                       "description": "The type of this object.",
-                      "enum": [
-                        "lock"
-                      ]
+                      "enum": ["lock"]
                     },
                     "expires_at": {
                       "type": "string",
@@ -324,10 +304,7 @@
                     "can_download": {
                       "description": "Defines who is allowed to download this file. The possible\nvalues are either `open` for everyone or `company` for\nthe other members of the user's enterprise.\n\nThis setting overrides the download permissions that are\nnormally part of the `role` of a collaboration. When set to\n`company`, this essentially removes the download option for\nexternal users with `viewer` or `editor` a roles.",
                       "type": "string",
-                      "enum": [
-                        "open",
-                        "company"
-                      ]
+                      "enum": ["open", "company"]
                     }
                   }
                 },
@@ -347,40 +324,38 @@
         "responses": {
           "200": {
             "description": "Returns a file object.\n\nNot all available fields are returned by default. Use the\n[fields](#param-fields) query parameter to explicitly request\nany specific fields.",
-              "$ref": "#/definitions/File"
+            "$ref": "#/definitions/File"
           },
           "401": {
             "description": "Returned when the access token provided in the `Authorization` header\nis not recognized or not provided.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "403": {
             "description": "Returned if the user does not have all the permissions to complete the\nupdate.\n\n* `access_denied_insufficient_permissions` when the authenticated user\ndoes not have access the destination folder to move the file to.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "404": {
             "description": "Returned if the file is not found, or the user does not\nhave access to the file.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "405": {
             "description": "Returned if the `file_id` is not in a recognized format.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "412": {
             "description": "Returns an error when the `If-Match` header does not match\nthe current `etag` value of the file. This indicates that the file\nhas changed since it was last requested.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "default": {
             "description": "An unexpected client error.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           }
         }
       },
       "delete": {
         "operationId": "delete_files_id",
         "summary": "Delete file",
-        "tags": [
-          "Files"
-        ],
+        "tags": ["Files"],
         "description": "Deletes a file, either permanently or by moving it to\nthe trash.\n\nThe the enterprise settings determine whether the item will\nbe permanently deleted from Box or moved to the trash.",
         "parameters": [
           {
@@ -404,23 +379,23 @@
           },
           "401": {
             "description": "Returned when the access token provided in the `Authorization` header\nis not recognized or not provided.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "404": {
             "description": "Returned if the file is not found or has already been deleted, or the user\ndoes not have access to the file.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "405": {
             "description": "Returned if the `file_id` is not in a recognized format.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "412": {
             "description": "Returns an error when the `If-Match` header does not match\nthe current `etag` value of the file. This indicates that the file\nhas changed since it was last requested.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           },
           "default": {
             "description": "An unexpected client error.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           }
         }
       }
@@ -429,9 +404,7 @@
       "get": {
         "operationId": "get_files_id_content",
         "summary": "Download file",
-        "tags": [
-          "Downloads"
-        ],
+        "tags": ["Downloads"],
         "description": "Returns the contents of a file in binary format.",
         "parameters": [
           {
@@ -492,7 +465,7 @@
           },
           "default": {
             "description": "An unexpected client error.",
-              "$ref": "#/definitions/ClientError"
+            "$ref": "#/definitions/ClientError"
           }
         }
       }
@@ -501,9 +474,7 @@
       "post": {
         "operationId": "post_file_requests_id_copy",
         "summary": "Copy file request",
-        "tags": [
-          "File requests"
-        ],
+        "tags": ["File requests"],
         "description": "Copies an existing file request that is already present on one folder,\nand applies it to another folder.",
         "parameters": [
           {
@@ -516,53 +487,56 @@
           {
             "name": "body",
             "in": "body",
-            "schema": {
-              "$ref": "#/definitions/FileRequestCopyRequest"
-            }
+            "$ref": "#/definitions/FileRequestCopyRequest"
           }
         ],
         "responses": {
           "200": {
             "description": "Returns updated file request object.",
-            "schema": {
-              "$ref": "#/definitions/FileRequest"
-            }
+            "$ref": "#/definitions/FileRequest"
           },
           "401": {
             "description": "Returned when the access token provided in the `Authorization` header\nis not recognized or not provided.",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
+            "$ref": "#/definitions/ClientError"
           },
           "403": {
             "description": "Returned if the user does not have all the permissions to complete the\nupdate.\n\n* `access_denied_insufficient_permissions` when the authenticated user\ndoes not have access to update the file request.",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
+            "$ref": "#/definitions/ClientError"
           },
           "404": {
             "description": "Returned if the file request is not found, or the user does not\nhave access to the associated folder.",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
+            "$ref": "#/definitions/ClientError"
           },
           "405": {
             "description": "Returned if the `file_request_id` is not in a recognized format.",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
+            "$ref": "#/definitions/ClientError"
           },
           "default": {
             "description": "An unexpected client error.",
-            "schema": {
-              "$ref": "#/definitions/ClientError"
-            }
+            "$ref": "#/definitions/ClientError"
           }
         }
       }
     }
   },
   "securityDefinitions": {
+    "OAuth2Security": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://account.box.com/api/oauth2/authorize",
+      "tokenUrl": "https://api.box.com/oauth2/token",
+      "scopes": {
+        "root_readonly": "Read all files and folders stored in Box",
+        "root_readwrite": "Read and write all files and folders stored in Box",
+        "manage_app_users": "Provision and manage app users",
+        "manage_managed_users": "Provision and manage managed users",
+        "manage_groups": "Manage an enterprise's groups",
+        "manage_webhook": "Create webhooks programmatically through the API",
+        "manage_enterprise_properties": "Manage enterprise properties",
+        "manage_data_retention": "Manage data retention polices",
+        "manage_legal_hold": "Manage Legal Holds"
+      }
+    }
   },
   "security": [
     {
@@ -709,28 +683,17 @@
                     "access": {
                       "type": "string",
                       "description": "The access level for this shared link.\n\n* `open` - provides access to this item to anyone with this link\n* `company` - only provides access to this item to people the same company\n* `collaborators` - only provides access to this item to people who are\n   collaborators on this item\n\nIf this field is omitted when creating the shared link, the access level\nwill be set to the default access level specified by the enterprise admin.",
-                      "enum": [
-                        "open",
-                        "company",
-                        "collaborators"
-                      ]
+                      "enum": ["open", "company", "collaborators"]
                     },
                     "effective_access": {
                       "type": "string",
                       "description": "The effective access level for the shared link. This can be a more\nrestrictive access level than the value in the `access` field when the\nenterprise settings restrict the allowed access levels.",
-                      "enum": [
-                        "open",
-                        "company",
-                        "collaborators"
-                      ]
+                      "enum": ["open", "company", "collaborators"]
                     },
                     "effective_permission": {
                       "type": "string",
                       "description": "The effective permissions for this shared link.",
-                      "enum": [
-                        "can_download",
-                        "can_preview"
-                      ]
+                      "enum": ["can_download", "can_preview"]
                     },
                     "unshared_at": {
                       "type": "string",
@@ -784,11 +747,7 @@
             "item_status": {
               "type": "string",
               "description": "Defines if this item has been deleted or not.\n\n* `active` when the item has is not in the trash\n* `trashed` when the item has been moved to the trash but not deleted\n* `deleted` when the item has been permanently deleted.",
-              "enum": [
-                "active",
-                "trashed",
-                "deleted"
-              ]
+              "enum": ["active", "trashed", "deleted"]
             }
           }
         }
@@ -802,9 +761,7 @@
         "type": {
           "description": "`error`",
           "type": "string",
-          "enum": [
-            "error"
-          ]
+          "enum": ["error"]
         },
         "status": {
           "description": "The HTTP status of the response.",
@@ -931,10 +888,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -991,10 +945,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -1069,10 +1020,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -1213,9 +1161,7 @@
         "$template": {
           "type": "string",
           "description": "`securityClassification-6VMVochwUWo`",
-          "enum": [
-            "securityClassification-6VMVochwUWo"
-          ]
+          "enum": ["securityClassification-6VMVochwUWo"]
         },
         "$scope": {
           "type": "string",
@@ -1302,12 +1248,7 @@
       "type": "object",
       "title": "Skill Card",
       "description": "A generic Box Skill metadata card.",
-      "required": [
-        "type",
-        "skill_card_type",
-        "skill",
-        "invocation"
-      ],
+      "required": ["type", "skill_card_type", "skill", "invocation"],
       "properties": {
         "created_at": {
           "type": "string",
@@ -1317,26 +1258,17 @@
         "type": {
           "type": "string",
           "description": "`skill_card`",
-          "enum": [
-            "skill_card"
-          ]
+          "enum": ["skill_card"]
         },
         "skill_card_type": {
           "type": "string",
           "description": "The type of card to add to the file.",
-          "enum": [
-            "transcript",
-            "keyword",
-            "timeline",
-            "status"
-          ]
+          "enum": ["transcript", "keyword", "timeline", "status"]
         },
         "skill_card_title": {
           "type": "object",
           "description": "The title of the card.",
-          "required": [
-            "message"
-          ],
+          "required": ["message"],
           "properties": {
             "code": {
               "type": "string",
@@ -1351,9 +1283,7 @@
         "status": {
           "type": "object",
           "description": "Used with a card of type `status` to set the status of the skill. This can be used to show a message to the user while the Skill is processing the data.",
-          "required": [
-            "code"
-          ],
+          "required": ["code"],
           "properties": {
             "code": {
               "type": "string",
@@ -1375,17 +1305,12 @@
         "skill": {
           "type": "object",
           "description": "The service that applied this metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`service`",
-              "enum": [
-                "service"
-              ]
+              "enum": ["service"]
             },
             "id": {
               "type": "string",
@@ -1396,17 +1321,12 @@
         "invocation": {
           "type": "object",
           "description": "The invocation of this service, used to track\nwhich instance of a service applied the metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`skill_invocation`",
-              "enum": [
-                "skill_invocation"
-              ]
+              "enum": ["skill_invocation"]
             },
             "id": {
               "type": "string",
@@ -1432,10 +1352,7 @@
               "appears": {
                 "type": "array",
                 "description": "Defines a list of timestamps for an entry. This is\nused with a `skill_card_type` of `transcript` as\nwell as `timeline` to place items on a timeline.\n\nFor a `skill_card_type` of `transcript` there can\nonly be one entry in this list for each item, and\nonly the `start` time is used to place the\ntranscript on the timeline.",
-                "required": [
-                  "start",
-                  "end"
-                ],
+                "required": ["start", "end"],
                 "items": {
                   "type": "object",
                   "description": "The timestamp for an entry.",
@@ -1464,13 +1381,7 @@
       "type": "object",
       "title": "Keyword Skill Card",
       "description": "A skill card that contains a set of keywords",
-      "required": [
-        "type",
-        "skill_card_type",
-        "skill",
-        "invocation",
-        "entries"
-      ],
+      "required": ["type", "skill_card_type", "skill", "invocation", "entries"],
       "properties": {
         "created_at": {
           "type": "string",
@@ -1480,23 +1391,17 @@
         "type": {
           "type": "string",
           "description": "`skill_card`",
-          "enum": [
-            "skill_card"
-          ]
+          "enum": ["skill_card"]
         },
         "skill_card_type": {
           "type": "string",
           "description": "`keyword`",
-          "enum": [
-            "keyword"
-          ]
+          "enum": ["keyword"]
         },
         "skill_card_title": {
           "type": "object",
           "description": "The title of the card.",
-          "required": [
-            "message"
-          ],
+          "required": ["message"],
           "properties": {
             "code": {
               "type": "string",
@@ -1511,17 +1416,12 @@
         "skill": {
           "type": "object",
           "description": "The service that applied this metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`service`",
-              "enum": [
-                "service"
-              ]
+              "enum": ["service"]
             },
             "id": {
               "type": "string",
@@ -1532,17 +1432,12 @@
         "invocation": {
           "type": "object",
           "description": "The invocation of this service, used to track\nwhich instance of a service applied the metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`skill_invocation`",
-              "enum": [
-                "skill_invocation"
-              ]
+              "enum": ["skill_invocation"]
             },
             "id": {
               "type": "string",
@@ -1570,13 +1465,7 @@
       "type": "object",
       "title": "Timeline Skill Card",
       "description": "A Box Skill metadata card that places a list of images on a\ntimeline.",
-      "required": [
-        "type",
-        "skill_card_type",
-        "skill",
-        "invocation",
-        "entries"
-      ],
+      "required": ["type", "skill_card_type", "skill", "invocation", "entries"],
       "properties": {
         "created_at": {
           "type": "string",
@@ -1586,23 +1475,17 @@
         "type": {
           "type": "string",
           "description": "`skill_card`",
-          "enum": [
-            "skill_card"
-          ]
+          "enum": ["skill_card"]
         },
         "skill_card_type": {
           "type": "string",
           "description": "`timeline`",
-          "enum": [
-            "timeline"
-          ]
+          "enum": ["timeline"]
         },
         "skill_card_title": {
           "type": "object",
           "description": "The title of the card.",
-          "required": [
-            "message"
-          ],
+          "required": ["message"],
           "properties": {
             "code": {
               "type": "string",
@@ -1617,17 +1500,12 @@
         "skill": {
           "type": "object",
           "description": "The service that applied this metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`service`",
-              "enum": [
-                "service"
-              ]
+              "enum": ["service"]
             },
             "id": {
               "type": "string",
@@ -1638,17 +1516,12 @@
         "invocation": {
           "type": "object",
           "description": "The invocation of this service, used to track\nwhich instance of a service applied the metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`skill_invocation`",
-              "enum": [
-                "skill_invocation"
-              ]
+              "enum": ["skill_invocation"]
             },
             "id": {
               "type": "string",
@@ -1674,10 +1547,7 @@
               "appears": {
                 "type": "array",
                 "description": "Defines a list of timestamps for when this item should appear on the\ntimeline.",
-                "required": [
-                  "start",
-                  "end"
-                ],
+                "required": ["start", "end"],
                 "items": {
                   "type": "object",
                   "description": "The timestamp for an entry.",
@@ -1706,13 +1576,7 @@
       "type": "object",
       "title": "Transcript Skill Card",
       "description": "A Box Skill metadata card that adds a transcript to a file.",
-      "required": [
-        "type",
-        "skill_card_type",
-        "skill",
-        "invocation",
-        "entries"
-      ],
+      "required": ["type", "skill_card_type", "skill", "invocation", "entries"],
       "properties": {
         "created_at": {
           "type": "string",
@@ -1722,23 +1586,17 @@
         "type": {
           "type": "string",
           "description": "`skill_card`",
-          "enum": [
-            "skill_card"
-          ]
+          "enum": ["skill_card"]
         },
         "skill_card_type": {
           "type": "string",
           "description": "`transcript`",
-          "enum": [
-            "transcript"
-          ]
+          "enum": ["transcript"]
         },
         "skill_card_title": {
           "type": "object",
           "description": "The title of the card.",
-          "required": [
-            "message"
-          ],
+          "required": ["message"],
           "properties": {
             "code": {
               "type": "string",
@@ -1753,17 +1611,12 @@
         "skill": {
           "type": "object",
           "description": "The service that applied this metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`service`",
-              "enum": [
-                "service"
-              ]
+              "enum": ["service"]
             },
             "id": {
               "type": "string",
@@ -1774,17 +1627,12 @@
         "invocation": {
           "type": "object",
           "description": "The invocation of this service, used to track\nwhich instance of a service applied the metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`skill_invocation`",
-              "enum": [
-                "skill_invocation"
-              ]
+              "enum": ["skill_invocation"]
             },
             "id": {
               "type": "string",
@@ -1810,9 +1658,7 @@
               "appears": {
                 "type": "array",
                 "description": "Defines when a transcribed bit of text appears. This only includes a\nstart time and no end time.",
-                "required": [
-                  "start"
-                ],
+                "required": ["start"],
                 "items": {
                   "type": "object",
                   "description": "The timestamp for an entry.",
@@ -1833,13 +1679,7 @@
       "type": "object",
       "title": "Status Skill Card",
       "description": "A Box Skill metadata card that puts a status message in the metadata sidebar.",
-      "required": [
-        "type",
-        "skill_card_type",
-        "skill",
-        "invocation",
-        "status"
-      ],
+      "required": ["type", "skill_card_type", "skill", "invocation", "status"],
       "properties": {
         "created_at": {
           "type": "string",
@@ -1849,23 +1689,17 @@
         "type": {
           "type": "string",
           "description": "`skill_card`",
-          "enum": [
-            "skill_card"
-          ]
+          "enum": ["skill_card"]
         },
         "skill_card_type": {
           "type": "string",
           "description": "`status`",
-          "enum": [
-            "status"
-          ]
+          "enum": ["status"]
         },
         "skill_card_title": {
           "type": "object",
           "description": "The title of the card.",
-          "required": [
-            "message"
-          ],
+          "required": ["message"],
           "properties": {
             "code": {
               "type": "string",
@@ -1880,9 +1714,7 @@
         "status": {
           "type": "object",
           "description": "Sets the status of the skill. This can be used to show a message to the user while the Skill is processing the data, or if it was not able to process the file.",
-          "required": [
-            "code"
-          ],
+          "required": ["code"],
           "properties": {
             "code": {
               "type": "string",
@@ -1904,17 +1736,12 @@
         "skill": {
           "type": "object",
           "description": "The service that applied this metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`service`",
-              "enum": [
-                "service"
-              ]
+              "enum": ["service"]
             },
             "id": {
               "type": "string",
@@ -1925,17 +1752,12 @@
         "invocation": {
           "type": "object",
           "description": "The invocation of this service, used to track\nwhich instance of a service applied the metadata.",
-          "required": [
-            "type",
-            "id"
-          ],
+          "required": ["type", "id"],
           "properties": {
             "type": {
               "type": "string",
               "description": "`skill_invocation`",
-              "enum": [
-                "skill_invocation"
-              ]
+              "enum": ["skill_invocation"]
             },
             "id": {
               "type": "string",
@@ -1980,9 +1802,7 @@
         "type": {
           "type": "string",
           "description": "`file-request`",
-          "enum": [
-            "file-request"
-          ],
+          "enum": ["file-request"],
           "readOnly": true
         },
         "title": {
@@ -1996,10 +1816,7 @@
         "status": {
           "type": "string",
           "description": "The status of the file request. This defaults\nto `active`.\n\nWhen the status is set to `inactive`, the file request\nwill no longer accept new submissions, and any visitor\nto the file request URL will receive a `HTTP 404` status\ncode.\n\nThis defaults to status of file request that was\ncopied to create this file request.",
-          "enum": [
-            "active",
-            "inactive"
-          ]
+          "enum": ["active", "inactive"]
         },
         "is_email_required": {
           "type": "boolean",
@@ -2082,10 +1899,7 @@
         "status": {
           "type": "string",
           "description": "An optional new status of the file request.\n\nWhen the status is set to `inactive`, the file request\nwill no longer accept new submissions, and any visitor\nto the file request URL will receive a `HTTP 404` status\ncode.\n\nThis will default to the value on the existing file request.",
-          "enum": [
-            "active",
-            "inactive"
-          ]
+          "enum": ["active", "inactive"]
         },
         "is_email_required": {
           "type": "boolean",
@@ -2106,9 +1920,7 @@
       "title": "File Request (Copy)",
       "type": "object",
       "description": "The request body to copy a file request.",
-      "required": [
-        "folder"
-      ],
+      "required": ["folder"],
       "allOf": [
         {
           "$ref": "#/definitions/FileRequestUpdateRequest"
@@ -2118,16 +1930,12 @@
             "folder": {
               "type": "object",
               "description": "The folder to associate the new file request to.",
-              "required": [
-                "id"
-              ],
+              "required": ["id"],
               "properties": {
                 "type": {
                   "type": "string",
                   "description": "`folder`",
-                  "enum": [
-                    "folder"
-                  ]
+                  "enum": ["folder"]
                 },
                 "id": {
                   "type": "string",
@@ -2290,28 +2098,17 @@
                     "access": {
                       "type": "string",
                       "description": "The access level for this shared link.\n\n* `open` - provides access to this item to anyone with this link\n* `company` - only provides access to this item to people the same company\n* `collaborators` - only provides access to this item to people who are\n   collaborators on this item\n\nIf this field is omitted when creating the shared link, the access level\nwill be set to the default access level specified by the enterprise admin.",
-                      "enum": [
-                        "open",
-                        "company",
-                        "collaborators"
-                      ]
+                      "enum": ["open", "company", "collaborators"]
                     },
                     "effective_access": {
                       "type": "string",
                       "description": "The effective access level for the shared link. This can be a more\nrestrictive access level than the value in the `access` field when the\nenterprise settings restrict the allowed access levels.",
-                      "enum": [
-                        "open",
-                        "company",
-                        "collaborators"
-                      ]
+                      "enum": ["open", "company", "collaborators"]
                     },
                     "effective_permission": {
                       "type": "string",
                       "description": "The effective permissions for this shared link.",
-                      "enum": [
-                        "can_download",
-                        "can_preview"
-                      ]
+                      "enum": ["can_download", "can_preview"]
                     },
                     "unshared_at": {
                       "type": "string",
@@ -2356,10 +2153,7 @@
               "properties": {
                 "access": {
                   "type": "string",
-                  "enum": [
-                    "open",
-                    "collaborators"
-                  ],
+                  "enum": ["open", "collaborators"],
                   "description": "When this parameter has been set, users can email files\nto the email address that has been automatically\ncreated for this folder.\n\nTo create an email address, set this property either when\ncreating or updating the folder.\n\nWhen set to `collaborators`, only emails from registered email\naddresses for collaborators will be accepted. This includes\nany email aliases a user might have registered.\n\nWhen set to `open` it will accept emails from any email\naddress."
                 },
                 "email": {
@@ -2382,11 +2176,7 @@
             "item_status": {
               "type": "string",
               "description": "Defines if this item has been deleted or not.\n\n* `active` when the item has is not in the trash\n* `trashed` when the item has been moved to the trash but not deleted\n* `deleted` when the item has been permanently deleted.",
-              "enum": [
-                "active",
-                "trashed",
-                "deleted"
-              ]
+              "enum": ["active", "trashed", "deleted"]
             },
             "item_collection": {
               "allOf": [
@@ -2441,10 +2231,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -2610,9 +2397,7 @@
         "type": {
           "type": "string",
           "description": "`metadata_template`",
-          "enum": [
-            "metadata_template"
-          ]
+          "enum": ["metadata_template"]
         },
         "scope": {
           "type": "string",
@@ -2621,16 +2406,12 @@
         "templateKey": {
           "type": "string",
           "description": "`securityClassification-6VMVochwUWo`",
-          "enum": [
-            "securityClassification-6VMVochwUWo"
-          ]
+          "enum": ["securityClassification-6VMVochwUWo"]
         },
         "displayName": {
           "type": "string",
           "description": "The name of this template as shown in web and mobile interfaces.",
-          "enum": [
-            "Classification"
-          ]
+          "enum": ["Classification"]
         },
         "hidden": {
           "type": "boolean",
@@ -2656,23 +2437,17 @@
               "type": {
                 "type": "string",
                 "description": "`enum`",
-                "enum": [
-                  "enum"
-                ]
+                "enum": ["enum"]
               },
               "key": {
                 "type": "string",
                 "description": "`Box__Security__Classification__Key`",
-                "enum": [
-                  "Box__Security__Classification__Key"
-                ]
+                "enum": ["Box__Security__Classification__Key"]
               },
               "displayName": {
                 "type": "string",
                 "description": "`Classification`",
-                "enum": [
-                  "Classification"
-                ]
+                "enum": ["Classification"]
               },
               "hidden": {
                 "type": "boolean",
@@ -2734,9 +2509,7 @@
         "type": {
           "type": "string",
           "description": "`metadata_template`",
-          "enum": [
-            "metadata_template"
-          ]
+          "enum": ["metadata_template"]
         },
         "scope": {
           "type": "string",
@@ -2767,23 +2540,13 @@
               {
                 "title": "Metadata Field (Write)",
                 "description": "A field within a metadata template. Fields can be a basic text, date, or\nnumber field, or a list of options.",
-                "required": [
-                  "type",
-                  "key",
-                  "displayName"
-                ],
+                "required": ["type", "key", "displayName"],
                 "type": "object",
                 "properties": {
                   "type": {
                     "type": "string",
                     "description": "The type of field. The basic fields are a `string` field for text, a\n`float` field for numbers, and a `date` fields to present the user with a\ndate-time picker.\n\nAdditionally, metadata templates support an `enum` field for a basic list\nof items, and ` multiSelect` field for a similar list of items where the\nuser can select more than one value.",
-                    "enum": [
-                      "string",
-                      "float",
-                      "date",
-                      "enum",
-                      "multiSelect"
-                    ]
+                    "enum": ["string", "float", "date", "enum", "multiSelect"]
                   },
                   "key": {
                     "type": "string",
@@ -2811,9 +2574,7 @@
                       "title": "Metadata Option (Write)",
                       "type": "object",
                       "description": "An option for a Metadata Template Field.\n\nOptions only need to be provided for fields of type `enum` and `multiSelect`.\nOptions represent the value(s) a user can select for the field either through\nthe UI or through the API.",
-                      "required": [
-                        "key"
-                      ],
+                      "required": ["key"],
                       "properties": {
                         "key": {
                           "description": "The text value of the option. This represents both the display name of the\noption and the internal key used when updating templates.",
@@ -2841,9 +2602,7 @@
                           "title": "Metadata Option (Write)",
                           "type": "object",
                           "description": "An option for a Metadata Template Field.\n\nOptions only need to be provided for fields of type `enum` and `multiSelect`.\nOptions represent the value(s) a user can select for the field either through\nthe UI or through the API.",
-                          "required": [
-                            "key"
-                          ],
+                          "required": ["key"],
                           "properties": {
                             "key": {
                               "description": "The text value of the option. This represents both the display name of the\noption and the internal key used when updating templates.",
@@ -2923,9 +2682,7 @@
         "type": {
           "type": "string",
           "description": "`metadata_cascade_policy`",
-          "enum": [
-            "metadata_cascade_policy"
-          ]
+          "enum": ["metadata_cascade_policy"]
         },
         "owner_enterprise": {
           "type": "object",
@@ -2934,9 +2691,7 @@
             "type": {
               "type": "string",
               "description": "`enterprise`",
-              "enum": [
-                "enterprise"
-              ]
+              "enum": ["enterprise"]
             },
             "id": {
               "type": "string",
@@ -2951,9 +2706,7 @@
             "type": {
               "type": "string",
               "description": "`folder`",
-              "enum": [
-                "folder"
-              ]
+              "enum": ["folder"]
             },
             "id": {
               "type": "string",
@@ -2964,10 +2717,7 @@
         "scope": {
           "type": "string",
           "description": "The scope of the of the template that is cascaded down to the folder's\nchildren.",
-          "enum": [
-            "global",
-            "enterprise_*"
-          ]
+          "enum": ["global", "enterprise_*"]
         },
         "templateKey": {
           "type": "string",
@@ -3004,10 +2754,7 @@
       "title": "Metadata query search request",
       "type": "object",
       "description": "Create a search using SQL-like syntax to return items that match specific\nmetadata.",
-      "required": [
-        "from",
-        "ancestor_folder_id"
-      ],
+      "required": ["from", "ancestor_folder_id"],
       "properties": {
         "from": {
           "type": "string",
@@ -3044,12 +2791,7 @@
               "direction": {
                 "type": "string",
                 "description": "The direction to order by, either ascending or descending.\n\nThe `ordering` direction must be the same for each item in the\narray.",
-                "enum": [
-                  "ASC",
-                  "DESC",
-                  "asc",
-                  "desc"
-                ]
+                "enum": ["ASC", "DESC", "asc", "desc"]
               }
             }
           }
@@ -3175,9 +2917,7 @@
         "type": {
           "type": "string",
           "description": "`collaboration`",
-          "enum": [
-            "collaboration"
-          ]
+          "enum": ["collaboration"]
         },
         "item": {
           "allOf": [
@@ -3224,11 +2964,7 @@
         },
         "status": {
           "type": "string",
-          "enum": [
-            "accepted",
-            "pending",
-            "rejected"
-          ],
+          "enum": ["accepted", "pending", "rejected"],
           "description": "The status of the collaboration invitation."
         },
         "acknowledged_at": {
@@ -3397,9 +3133,7 @@
         "type": {
           "type": "string",
           "description": "`task`",
-          "enum": [
-            "task"
-          ]
+          "enum": ["task"]
         },
         "item": {
           "allOf": [
@@ -3419,10 +3153,7 @@
         "action": {
           "type": "string",
           "description": "The type of task the task assignee will be prompted to\nperform.",
-          "enum": [
-            "review",
-            "complete"
-          ]
+          "enum": ["review", "complete"]
         },
         "message": {
           "type": "string",
@@ -3460,10 +3191,7 @@
         "completion_rule": {
           "type": "string",
           "description": "Defines which assignees need to complete this task before the task\nis considered completed.\n\n* `all_assignees` requires all assignees to review or\napprove the the task in order for it to be considered completed.\n* `any_assignee` accepts any one assignee to review or\napprove the the task in order for it to be considered completed.",
-          "enum": [
-            "all_assignees",
-            "any_assignee"
-          ]
+          "enum": ["all_assignees", "any_assignee"]
         }
       }
     },
@@ -3497,9 +3225,7 @@
         "type": {
           "type": "string",
           "description": "`task_assignment`",
-          "enum": [
-            "task_assignment"
-          ]
+          "enum": ["task_assignment"]
         },
         "item": {
           "allOf": [
@@ -3543,12 +3269,7 @@
         "resolution_state": {
           "type": "string",
           "description": "The current state of the assignment. The available states depend on\nthe `action` value of the task object.",
-          "enum": [
-            "completed",
-            "incomplete",
-            "approved",
-            "rejected"
-          ]
+          "enum": ["completed", "incomplete", "approved", "rejected"]
         },
         "assigned_by": {
           "allOf": [
@@ -3694,28 +3415,17 @@
                     "access": {
                       "type": "string",
                       "description": "The access level for this shared link.\n\n* `open` - provides access to this item to anyone with this link\n* `company` - only provides access to this item to people the same company\n* `collaborators` - only provides access to this item to people who are\n   collaborators on this item\n\nIf this field is omitted when creating the shared link, the access level\nwill be set to the default access level specified by the enterprise admin.",
-                      "enum": [
-                        "open",
-                        "company",
-                        "collaborators"
-                      ]
+                      "enum": ["open", "company", "collaborators"]
                     },
                     "effective_access": {
                       "type": "string",
                       "description": "The effective access level for the shared link. This can be a more\nrestrictive access level than the value in the `access` field when the\nenterprise settings restrict the allowed access levels.",
-                      "enum": [
-                        "open",
-                        "company",
-                        "collaborators"
-                      ]
+                      "enum": ["open", "company", "collaborators"]
                     },
                     "effective_permission": {
                       "type": "string",
                       "description": "The effective permissions for this shared link.",
-                      "enum": [
-                        "can_download",
-                        "can_preview"
-                      ]
+                      "enum": ["can_download", "can_preview"]
                     },
                     "unshared_at": {
                       "type": "string",
@@ -3758,11 +3468,7 @@
             },
             "item_status": {
               "type": "string",
-              "enum": [
-                "active",
-                "trashed",
-                "deleted"
-              ],
+              "enum": ["active", "trashed", "deleted"],
               "description": "Whether this item is deleted or not. Values include `active`,\n`trashed` if the file has been moved to the trash, and `deleted` if\nthe file has been permanently deleted"
             }
           }
@@ -3807,10 +3513,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -3951,9 +3654,7 @@
         "type": {
           "type": "string",
           "description": "`email_alias`",
-          "enum": [
-            "email_alias"
-          ]
+          "enum": ["email_alias"]
         },
         "email": {
           "type": "string",
@@ -4003,10 +3704,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -4037,9 +3735,7 @@
         "type": {
           "type": "string",
           "description": "`invite`",
-          "enum": [
-            "invite"
-          ]
+          "enum": ["invite"]
         },
         "invited_to": {
           "title": "Enterprise",
@@ -4053,9 +3749,7 @@
             "type": {
               "type": "string",
               "description": "`enterprise`",
-              "enum": [
-                "enterprise"
-              ]
+              "enum": ["enterprise"]
             },
             "name": {
               "description": "The name of the enterprise",
@@ -4123,10 +3817,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -4182,9 +3873,7 @@
         "type": {
           "type": "string",
           "description": "`group_membership`",
-          "enum": [
-            "group_membership"
-          ]
+          "enum": ["group_membership"]
         },
         "user": {
           "allOf": [
@@ -4209,10 +3898,7 @@
         "role": {
           "type": "string",
           "description": "The role of the user in the group.",
-          "enum": [
-            "member",
-            "admin"
-          ]
+          "enum": ["member", "admin"]
         },
         "created_at": {
           "type": "string",
@@ -4276,9 +3962,7 @@
         "type": {
           "type": "string",
           "description": "`webhook`",
-          "enum": [
-            "webhook"
-          ]
+          "enum": ["webhook"]
         },
         "target": {
           "type": "object",
@@ -4291,10 +3975,7 @@
             "type": {
               "description": "The type of item to trigger a webhook",
               "type": "string",
-              "enum": [
-                "file",
-                "folder"
-              ]
+              "enum": ["file", "folder"]
             }
           }
         },
@@ -4444,10 +4125,7 @@
                   "direction": {
                     "type": "string",
                     "description": "The direction to order by, either ascending or descending",
-                    "enum": [
-                      "ASC",
-                      "DESC"
-                    ]
+                    "enum": ["ASC", "DESC"]
                   }
                 }
               }
@@ -4536,18 +4214,12 @@
             "policy_type": {
               "type": "string",
               "description": "The type of the retention policy. A retention\npolicy type can either be `finite`, where a\nspecific amount of time to retain the content is known\nupfront, or `indefinite`, where the amount of time\nto retain the content is still unknown.",
-              "enum": [
-                "finite",
-                "indefinite"
-              ]
+              "enum": ["finite", "indefinite"]
             },
             "status": {
               "type": "string",
               "description": "The status of the retention policy. The status of\na policy will be `active`, unless explicitly retired by an\nadministrator, in which case the status will be `retired`.\nOnce a policy has been retired, it cannot become\nactive again.",
-              "enum": [
-                "active",
-                "retired"
-              ]
+              "enum": ["active", "retired"]
             },
             "created_by": {
               "allOf": [
@@ -4623,9 +4295,7 @@
         "type": {
           "type": "string",
           "description": "`retention_policy_assignment`",
-          "enum": [
-            "retention_policy_assignment"
-          ]
+          "enum": ["retention_policy_assignment"]
         },
         "retention_policy": {
           "allOf": [
@@ -4775,12 +4445,7 @@
             },
             "status": {
               "type": "string",
-              "enum": [
-                "active",
-                "applying",
-                "releasing",
-                "released"
-              ],
+              "enum": ["active", "applying", "releasing", "released"],
               "description": "* 'active' - the policy is not in a transition state\n* 'applying' - that the policy is in the process of\n  being applied\n* 'releasing' - that the process is in the process\n  of being released\n* 'released' - the policy is no longer active"
             },
             "assignment_counts": {
@@ -4995,9 +4660,7 @@
         "type": {
           "type": "string",
           "description": "`file_version_retention`",
-          "enum": [
-            "file_version_retention"
-          ]
+          "enum": ["file_version_retention"]
         },
         "file_version": {
           "allOf": [
@@ -5053,9 +4716,7 @@
         "type": {
           "type": "string",
           "description": "`file_version_legal_hold`",
-          "enum": [
-            "file_version_legal_hold"
-          ]
+          "enum": ["file_version_legal_hold"]
         },
         "file_version": {
           "allOf": [
@@ -5103,9 +4764,7 @@
         "type": {
           "type": "string",
           "description": "`device_pinner`",
-          "enum": [
-            "device_pinner"
-          ]
+          "enum": ["device_pinner"]
         },
         "owned_by": {
           "allOf": [
@@ -5164,18 +4823,13 @@
             "properties": {
               "by": {
                 "description": "The field that is ordered by",
-                "enum": [
-                  "id"
-                ],
+                "enum": ["id"],
                 "type": "string"
               },
               "direction": {
                 "type": "string",
                 "description": "The direction to order by, either ascending or descending",
-                "enum": [
-                  "asc",
-                  "desc"
-                ]
+                "enum": ["asc", "desc"]
               }
             }
           }
@@ -5214,10 +4868,7 @@
             "status": {
               "description": "Whether these terms are enabled or not",
               "type": "string",
-              "enum": [
-                "enabled",
-                "disabled"
-              ]
+              "enum": ["enabled", "disabled"]
             },
             "enterprise": {
               "allOf": [
@@ -5233,9 +4884,7 @@
                     "type": {
                       "type": "string",
                       "description": "`enterprise`",
-                      "enum": [
-                        "enterprise"
-                      ]
+                      "enum": ["enterprise"]
                     },
                     "name": {
                       "description": "The name of the enterprise",
@@ -5251,10 +4900,7 @@
             "tos_type": {
               "description": "Whether to apply these terms to managed users or external users",
               "type": "string",
-              "enum": [
-                "managed",
-                "external"
-              ]
+              "enum": ["managed", "external"]
             },
             "text": {
               "description": "The text for your terms and conditions. This text could be\nempty if the `status` is set to `disabled`.",
@@ -5304,9 +4950,7 @@
         "type": {
           "type": "string",
           "description": "`terms_of_service_user_status`",
-          "enum": [
-            "terms_of_service_user_status"
-          ]
+          "enum": ["terms_of_service_user_status"]
         },
         "tos": {
           "allOf": [
@@ -5394,9 +5038,7 @@
         "type": {
           "type": "string",
           "description": "`collaboration_whitelist_entry`",
-          "enum": [
-            "collaboration_whitelist_entry"
-          ]
+          "enum": ["collaboration_whitelist_entry"]
         },
         "domain": {
           "type": "string",
@@ -5405,11 +5047,7 @@
         "direction": {
           "type": "string",
           "description": "The direction of the collaborations to allow.",
-          "enum": [
-            "inbound",
-            "outbound",
-            "both"
-          ]
+          "enum": ["inbound", "outbound", "both"]
         },
         "enterprise": {
           "allOf": [
@@ -5425,9 +5063,7 @@
                 "type": {
                   "type": "string",
                   "description": "`enterprise`",
-                  "enum": [
-                    "enterprise"
-                  ]
+                  "enum": ["enterprise"]
                 },
                 "name": {
                   "description": "The name of the enterprise",
@@ -5497,9 +5133,7 @@
         "type": {
           "type": "string",
           "description": "`collaboration_whitelist`",
-          "enum": [
-            "collaboration_whitelist"
-          ]
+          "enum": ["collaboration_whitelist"]
         },
         "enterprise": {
           "allOf": [
@@ -5515,9 +5149,7 @@
                 "type": {
                   "type": "string",
                   "description": "`enterprise`",
-                  "enum": [
-                    "enterprise"
-                  ]
+                  "enum": ["enterprise"]
                 },
                 "name": {
                   "description": "The name of the enterprise",
@@ -5544,9 +5176,7 @@
                 "type": {
                   "type": "string",
                   "description": "`enterprise`",
-                  "enum": [
-                    "enterprise"
-                  ]
+                  "enum": ["enterprise"]
                 },
                 "name": {
                   "description": "The name of the enterprise",
@@ -5741,10 +5371,7 @@
                 "type": {
                   "type": "string",
                   "description": "The type of this item",
-                  "enum": [
-                    "file",
-                    "folder"
-                  ]
+                  "enum": ["file", "folder"]
                 },
                 "original_name": {
                   "type": "string",
@@ -5764,9 +5391,7 @@
       "title": "Create a `zip` archive",
       "type": "object",
       "description": "A request to create a `zip` archive to download",
-      "required": [
-        "items"
-      ],
+      "required": ["items"],
       "properties": {
         "items": {
           "type": "array",
@@ -5774,18 +5399,12 @@
           "items": {
             "type": "object",
             "description": "An item to add to the `zip` archive. This can be a file or a folder.",
-            "required": [
-              "type",
-              "id"
-            ],
+            "required": ["type", "id"],
             "properties": {
               "type": {
                 "type": "string",
                 "description": "The type of the item to add to the archive.",
-                "enum": [
-                  "file",
-                  "folder."
-                ]
+                "enum": ["file", "folder."]
               },
               "id": {
                 "type": "string",
@@ -5831,11 +5450,7 @@
           "type": "string",
           "description": "The state of the archive being downloaded.",
           "default": "in_progeress",
-          "enum": [
-            "in_progress",
-            "failed",
-            "success"
-          ]
+          "enum": ["in_progress", "failed", "success"]
         }
       }
     },
@@ -5851,9 +5466,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": [
-                "sign-request"
-              ],
+              "enum": ["sign-request"],
               "description": "object type"
             },
             "signers": {
@@ -5964,11 +5577,7 @@
       "title": "Create a sign request",
       "type": "object",
       "description": "A request to create a sign request object",
-      "required": [
-        "signers",
-        "source_files",
-        "parent_folder"
-      ],
+      "required": ["signers", "source_files", "parent_folder"],
       "properties": {
         "is_document_preparation_needed": {
           "type": "boolean",
@@ -6211,11 +5820,7 @@
     "Metadata--Base": {
       "title": "Metadata instance (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["base", "standard", "full"],
       "x-box-variant": "base",
       "description": "The base representation of a metadata instance.",
       "properties": {
@@ -6272,12 +5877,7 @@
     "User--Base": {
       "title": "User (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["base", "mini", "standard", "full"],
       "x-box-variant": "base",
       "description": "A mini representation of a user, used when\nnested within another resource.",
       "properties": {
@@ -6288,9 +5888,7 @@
         "type": {
           "type": "string",
           "description": "`user`",
-          "enum": [
-            "user"
-          ]
+          "enum": ["user"]
         }
       }
     },
@@ -6310,11 +5908,7 @@
         "status": {
           "type": "string",
           "description": "The status of the metadata query index",
-          "enum": [
-            "building",
-            "active",
-            "disabled"
-          ]
+          "enum": ["building", "active", "disabled"]
         },
         "fields": {
           "type": "array",
@@ -6332,10 +5926,7 @@
                   "sort_direction": {
                     "type": "string",
                     "description": "The sort direction of the field.",
-                    "enum": [
-                      "asc",
-                      "desc"
-                    ]
+                    "enum": ["asc", "desc"]
                   }
                 }
               }
@@ -6347,11 +5938,7 @@
     "Comment--Base": {
       "title": "Comment (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["base", "standard", "full"],
       "x-box-variant": "base",
       "description": "Base representation of a comment.",
       "properties": {
@@ -6362,19 +5949,14 @@
         "type": {
           "type": "string",
           "description": "`comment`",
-          "enum": [
-            "comment"
-          ]
+          "enum": ["comment"]
         }
       }
     },
     "TermsOfService--Mini": {
       "title": "Terms of service (Mini)",
       "type": "object",
-      "x-box-variants": [
-        "mini",
-        "standard"
-      ],
+      "x-box-variants": ["mini", "standard"],
       "x-box-variant": "mini",
       "description": "The root-level record that is supposed to represent a\nsingle Terms of Service.",
       "properties": {
@@ -6385,9 +5967,7 @@
         "type": {
           "type": "string",
           "description": "`terms_of_service`",
-          "enum": [
-            "terms_of_service"
-          ]
+          "enum": ["terms_of_service"]
         }
       }
     },
@@ -6432,10 +6012,7 @@
             "group_type": {
               "type": "string",
               "description": "The type of the group.",
-              "enum": [
-                "managed_group",
-                "all_users_group"
-              ]
+              "enum": ["managed_group", "all_users_group"]
             }
           }
         }
@@ -6656,23 +6233,17 @@
         "type": {
           "type": "string",
           "description": "`collection`",
-          "enum": [
-            "collection"
-          ]
+          "enum": ["collection"]
         },
         "name": {
           "type": "string",
           "description": "The name of the collection.",
-          "enum": [
-            "Favorites"
-          ]
+          "enum": ["Favorites"]
         },
         "collection_type": {
           "type": "string",
           "description": "The type of the collection. This is used to\ndetermine the proper visual treatment for\ncollections.",
-          "enum": [
-            "favorites"
-          ]
+          "enum": ["favorites"]
         }
       }
     },
@@ -6741,10 +6312,7 @@
             "disposition_action": {
               "type": "string",
               "description": "The disposition action of the retention policy.\nThis action can be `permanently_delete`, which\nwill cause the content retained by the policy\nto be permanently deleted, or `remove_retention`,\nwhich will lift the retention policy from the content,\nallowing it to be deleted by users,\nonce the retention policy has expired.",
-              "enum": [
-                "permanently_delete",
-                "remove_retention"
-              ]
+              "enum": ["permanently_delete", "remove_retention"]
             }
           }
         }
@@ -6753,10 +6321,7 @@
     "LegalHoldPolicy--Mini": {
       "title": "Legal hold policy (Mini)",
       "type": "object",
-      "x-box-variants": [
-        "mini",
-        "standard"
-      ],
+      "x-box-variants": ["mini", "standard"],
       "x-box-variant": "mini",
       "description": "A mini legal hold policy",
       "properties": {
@@ -6767,19 +6332,14 @@
         "type": {
           "type": "string",
           "description": "`legal_hold_policy`",
-          "enum": [
-            "legal_hold_policy"
-          ]
+          "enum": ["legal_hold_policy"]
         }
       }
     },
     "LegalHoldPolicyAssignment--Base": {
       "title": "Legal hold policy assignment (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "standard"
-      ],
+      "x-box-variants": ["base", "standard"],
       "x-box-variant": "base",
       "description": "Legal Hold Assignments are used to assign Legal Hold\nPolicies to Users, Folders, Files, or File Versions.\n\nCreating a Legal Hold Assignment puts a hold\non the File-Versions that belong to the Assignment's\n'apply-to' entity.",
       "properties": {
@@ -6790,19 +6350,14 @@
         "type": {
           "type": "string",
           "description": "`legal_hold_policy_assignment`",
-          "enum": [
-            "legal_hold_policy_assignment"
-          ]
+          "enum": ["legal_hold_policy_assignment"]
         }
       }
     },
     "StoragePolicy--Mini": {
       "title": "Storage policy (Mini)",
       "type": "object",
-      "x-box-variants": [
-        "standard",
-        "mini"
-      ],
+      "x-box-variants": ["standard", "mini"],
       "x-box-variant": "mini",
       "description": "A mini description of a Storage Policy object",
       "properties": {
@@ -6813,9 +6368,7 @@
         "type": {
           "type": "string",
           "description": "`storage_policy`",
-          "enum": [
-            "storage_policy"
-          ]
+          "enum": ["storage_policy"]
         }
       }
     },
@@ -6823,9 +6376,7 @@
       "title": "Signer fields for GET Sign Request response",
       "type": "object",
       "description": "The schema for a Signer in a GET Sign Request request body",
-      "required": [
-        "email"
-      ],
+      "required": ["email"],
       "allOf": [
         {
           "$ref": "#/definitions/SignRequestCreateSigner"
@@ -6842,10 +6393,7 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": [
-                    "signed",
-                    "declined"
-                  ],
+                  "enum": ["signed", "declined"],
                   "description": "Type of decision made by the signer"
                 },
                 "finalized_at": {
@@ -6876,9 +6424,7 @@
       "title": "Signer fields for Create Sign Request",
       "type": "object",
       "description": "The schema for a Signer in a POST Sign Request request body",
-      "required": [
-        "email"
-      ],
+      "required": ["email"],
       "properties": {
         "email": {
           "type": "string",
@@ -6886,11 +6432,7 @@
         },
         "role": {
           "type": "string",
-          "enum": [
-            "signer",
-            "approver",
-            "final_copy_reader"
-          ],
+          "enum": ["signer", "approver", "final_copy_reader"],
           "description": "Defines the role of the signer in the sign request. A `signer`\nmust sign the document and an `approver` must approve the document. A\n`final_copy_reader` only receives the final signed document and signing\nlog.",
           "default": "signer"
         },
@@ -6958,9 +6500,7 @@
                   "type": {
                     "type": "string",
                     "description": "The flow's resource type",
-                    "enum": [
-                      "flow"
-                    ]
+                    "enum": ["flow"]
                   },
                   "trigger": {
                     "allOf": [
@@ -6970,16 +6510,12 @@
                           "type": {
                             "type": "string",
                             "description": "The trigger's resource type",
-                            "enum": [
-                              "trigger"
-                            ]
+                            "enum": ["trigger"]
                           },
                           "trigger_type": {
                             "type": "string",
                             "description": "The type of trigger selected for this flow",
-                            "enum": [
-                              "WORKFLOW_MANUAL_START"
-                            ]
+                            "enum": ["WORKFLOW_MANUAL_START"]
                           },
                           "scope": {
                             "type": "array",
@@ -6991,9 +6527,7 @@
                                 "type": {
                                   "type": "string",
                                   "description": "The trigger scope's resource type",
-                                  "enum": [
-                                    "trigger_scope"
-                                  ]
+                                  "enum": ["trigger_scope"]
                                 },
                                 "ref": {
                                   "type": "string",
@@ -7006,9 +6540,7 @@
                                     "type": {
                                       "type": "string",
                                       "description": "The type of the object",
-                                      "enum": [
-                                        "folder"
-                                      ]
+                                      "enum": ["folder"]
                                     },
                                     "id": {
                                       "type": "string",
@@ -7041,9 +6573,7 @@
                             "type": {
                               "type": "string",
                               "description": "The outcomes resource type",
-                              "enum": [
-                                "outcome"
-                              ]
+                              "enum": ["outcome"]
                             },
                             "name": {
                               "type": "string",
@@ -7103,9 +6633,7 @@
                                   "type": {
                                     "type": "string",
                                     "description": "The outcomes resource type",
-                                    "enum": [
-                                      "outcome"
-                                    ]
+                                    "enum": ["outcome"]
                                   },
                                   "name": {
                                     "type": "string",
@@ -7188,12 +6716,7 @@
     "File--Base": {
       "title": "File (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["base", "mini", "standard", "full"],
       "x-box-variant": "base",
       "description": "The bare basic representation of a file, the minimal\namount of fields returned when using the `fields` query\nparameter.",
       "properties": {
@@ -7208,21 +6731,14 @@
         "type": {
           "type": "string",
           "description": "`file`",
-          "enum": [
-            "file"
-          ]
+          "enum": ["file"]
         }
       }
     },
     "Folder--Base": {
       "title": "Folder (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["base", "mini", "standard", "full"],
       "x-box-variant": "base",
       "description": "The bare basic representation of a folder, the minimal\namount of fields returned when using the `fields` query\nparameter.",
       "properties": {
@@ -7237,20 +6753,14 @@
         "type": {
           "type": "string",
           "description": "`folder`",
-          "enum": [
-            "folder"
-          ]
+          "enum": ["folder"]
         }
       }
     },
     "FileVersion--Base": {
       "title": "File version (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard"
-      ],
+      "x-box-variants": ["base", "mini", "standard"],
       "x-box-variant": "base",
       "description": "The bare basic representation of a file version, the minimal\namount of fields returned when using the `fields` query\nparameter.",
       "properties": {
@@ -7261,20 +6771,14 @@
         "type": {
           "type": "string",
           "description": "`file_version`",
-          "enum": [
-            "file_version"
-          ]
+          "enum": ["file_version"]
         }
       }
     },
     "WebLink--Base": {
       "title": "Web link (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard"
-      ],
+      "x-box-variants": ["base", "mini", "standard"],
       "x-box-variant": "base",
       "description": "Web links are objects that point to URLs. These objects\nare also known as bookmarks within the Box web application.\n\nWeb link objects are treated similarly to file objects,\nthey will also support most actions that apply to regular files.",
       "properties": {
@@ -7285,9 +6789,7 @@
         "type": {
           "type": "string",
           "description": "`web_link`",
-          "enum": [
-            "web_link"
-          ]
+          "enum": ["web_link"]
         },
         "etag": {
           "type": "string",
@@ -7298,12 +6800,7 @@
     "Group--Base": {
       "title": "Group (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["base", "mini", "standard", "full"],
       "x-box-variant": "base",
       "description": "A base representation of a group.",
       "properties": {
@@ -7314,9 +6811,7 @@
         "type": {
           "type": "string",
           "description": "`group`",
-          "enum": [
-            "group"
-          ]
+          "enum": ["group"]
         }
       }
     },
@@ -7327,10 +6822,7 @@
       "properties": {
         "item_type": {
           "type": "string",
-          "enum": [
-            "file",
-            "folder"
-          ],
+          "enum": ["file", "folder"],
           "description": "The type of the item that the event\nrepresents. Can be `file` or `folder`.\n"
         },
         "item_id": {
@@ -7367,11 +6859,7 @@
     "RetentionPolicy--Base": {
       "title": "Retention policy (Base)",
       "type": "object",
-      "x-box-variants": [
-        "base",
-        "mini",
-        "standard"
-      ],
+      "x-box-variants": ["base", "mini", "standard"],
       "x-box-variant": "base",
       "description": "The bare basic representation of a file version, the minimal\namount of fields returned when using the `fields` query\nparameter.",
       "properties": {
@@ -7382,9 +6870,7 @@
         "type": {
           "type": "string",
           "description": "`retention_policy`",
-          "enum": [
-            "retention_policy"
-          ]
+          "enum": ["retention_policy"]
         }
       }
     },
@@ -7392,9 +6878,7 @@
       "title": "Sign Request Signer Input",
       "type": "object",
       "description": "Input created by a Signer on a Sign Request",
-      "required": [
-        "page_index"
-      ],
+      "required": ["page_index"],
       "allOf": [
         {
           "$ref": "#/definitions/SignRequestPrefillTag"
@@ -7403,12 +6887,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": [
-                "signature",
-                "date",
-                "text",
-                "checkbox"
-              ],
+              "enum": ["signature", "date", "text", "checkbox"],
               "description": "Type of input"
             },
             "page_index": {
@@ -7422,11 +6901,7 @@
     "Workflow--Mini": {
       "title": "Workflow (Mini)",
       "type": "object",
-      "x-box-variants": [
-        "mini",
-        "standard",
-        "full"
-      ],
+      "x-box-variants": ["mini", "standard", "full"],
       "x-box-variant": "mini",
       "description": "Box Relay Workflows are objects that represent a named collection of flows.\n\nYou application must be authorized to use the `Manage Box Relay` application\nscope within the developer console in order to use this resource.",
       "properties": {
@@ -7437,9 +6912,7 @@
         "type": {
           "type": "string",
           "description": "`workflow`",
-          "enum": [
-            "workflow"
-          ]
+          "enum": ["workflow"]
         },
         "name": {
           "type": "string",
