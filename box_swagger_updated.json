@@ -15,7 +15,7 @@
     },
     "version": "2.0.0"
   },
-  "host": "api.box.com",
+  "host": "account.box.com",
   "basePath": "/2.0",
   "schemes": [
     "https"
