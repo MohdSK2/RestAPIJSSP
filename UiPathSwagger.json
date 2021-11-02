@@ -1,0 +1,281 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "UiPath.WebApi 13.0",
+      "description": "Orchestrator API",
+      "version": "13.0"
+    },
+    "host": "cloud.uipath.com",
+    "basePath": "/Mohdtjuvhum/MohdDefault/orchestrator_/",
+    "schemes": [
+      "https"
+    ],
+    "paths": {
+        "/odata/Robots": {
+            "get": {
+              "tags": [
+                "Robots"
+              ],
+              "summary": "Gets robots.",
+              "description": "OAuth required scopes: OR.Robots or OR.Robots.Read.\n\nRequired permissions: Robots.View.",
+              "operationId": "Robots_Get",
+              "produces": [
+                "application/json"
+              ],
+              "parameters": [
+                {
+                  "in": "query",
+                  "name": "$expand",
+                  "description": "Indicates the related entities to be represented inline. The maximum depth is 2.",
+                  "type": "string"
+                },
+                {
+                  "in": "query",
+                  "name": "$filter",
+                  "description": "Restricts the set of items returned. The maximum number of expressions is 100.",
+                  "type": "string"
+                },
+                {
+                  "in": "query",
+                  "name": "$select",
+                  "description": "Limits the properties returned in the result.",
+                  "type": "string"
+                },
+                {
+                  "in": "query",
+                  "name": "$orderby",
+                  "description": "Specifies the order in which items are returned. The maximum number of expressions is 5.",
+                  "type": "string"
+                },
+                {
+                  "in": "query",
+                  "name": "$top",
+                  "description": "Limits the number of items returned from a collection. The maximum value is 1000.",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                {
+                  "in": "query",
+                  "name": "$skip",
+                  "description": "Excludes the specified number of items of the queried collection from the result.",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                {
+                  "in": "query",
+                  "name": "$count",
+                  "description": "Indicates whether the total count of items within a collection are returned in the result.",
+                  "type": "boolean"
+                },
+                {
+                  "in": "header",
+                  "name": "X-UIPATH-OrganizationUnitId",
+                  "description": "Folder/OrganizationUnit Id",
+                  "type": "integer",
+                  "format": "int64"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Success",
+                  "schema": {
+                    "$ref": "#/definitions/ODataValueOfIEnumerableOfRobotDto"
+                  }
+                }
+              }
+            }
+          }
+    },
+
+    "definitions": {
+        "ODataValueOfIEnumerableOfRobotDto": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/RobotDto"
+                }
+              }
+            }
+          },
+          "RobotDto": {
+            "description": "A Robot is an execution host that runs processes built in UiPath Studio.",
+            "required": [
+              "HostingType",
+              "Name",
+              "Type"
+            ],
+            "type": "object",
+            "properties": {
+              "LicenseKey": {
+                "description": "The key is automatically generated from the server for the Robot machine.\r\n<para />For the robot to work, the same key must exist on both the robot and Orchestrator.\r\n<para />All robots on a machine must have the same license key in order to register correctly.",
+                "maxLength": 255,
+                "minLength": 0,
+                "type": "string"
+              },
+              "MachineName": {
+                "description": "The name of the machine a Robot is hosted on.",
+                "maxLength": 450,
+                "minLength": 0,
+                "type": "string"
+              },
+              "MachineId": {
+                "format": "int64",
+                "description": "The Id of the machine a Robot is hosted on",
+                "type": "integer"
+              },
+              "Name": {
+                "description": "A custom name for the robot.",
+                "maxLength": 19,
+                "minLength": 0,
+                "type": "string"
+              },
+              "Username": {
+                "description": "The machine username. If the user is under a domain, you are required to also specify it in a DOMAIN\\username format.\r\n<para />Note: You must use short domain names, such as desktop\\administrator and NOT desktop.local/administrator.",
+                "maxLength": 100,
+                "minLength": 0,
+                "type": "string"
+              },
+              "ExternalName": {
+                "description": "Contains the value of the key in the external store used to store the password.",
+                "maxLength": 450,
+                "minLength": 0,
+                "type": "string"
+              },
+              "Description": {
+                "description": "Used to add additional information about a robot in order to better identify it.",
+                "maxLength": 500,
+                "minLength": 0,
+                "type": "string"
+              },
+              "Type": {
+                "description": "The Robot type.",
+                "enum": [
+                  "NonProduction",
+                  "Attended",
+                  "Unattended",
+                  "Studio",
+                  "Development",
+                  "RpaDeveloper",
+                  "StudioX",
+                  "CitizenDeveloper",
+                  "Headless",
+                  "StudioPro",
+                  "RpaDeveloperPro",
+                  "TestAutomation",
+                  "AutomationCloud"
+                ],
+                "type": "string",
+                "x-ms-enum": {
+                  "name": "RobotDtoType",
+                  "modelAsString": false
+                }
+              },
+              "HostingType": {
+                "description": "The Robot hosting type (Standard / Floating).",
+                "enum": [
+                  "Standard",
+                  "Floating"
+                ],
+                "type": "string",
+                "x-ms-enum": {
+                  "name": "RobotDtoHostingType",
+                  "modelAsString": false
+                }
+              },
+              "ProvisionType": {
+                "description": "The Robot provision type.",
+                "enum": [
+                  "Manual",
+                  "Automatic"
+                ],
+                "type": "string",
+                "x-ms-enum": {
+                  "name": "RobotDtoProvisionType",
+                  "modelAsString": false
+                }
+              },
+              "Password": {
+                "description": "The Windows password associated with the machine username.",
+                "maxLength": 100,
+                "minLength": 0,
+                "type": "string"
+              },
+              "CredentialStoreId": {
+                "format": "int64",
+                "description": "The Credential Store used to store the password.",
+                "type": "integer"
+              },
+              "UserId": {
+                "format": "int64",
+                "description": "The associated user's Id.",
+                "type": "integer"
+              },
+              "Enabled": {
+                "description": "Specificies the state of the Robot (enabled/disabled) - a disabled robot cannot connect to Orchestrator",
+                "type": "boolean"
+              },
+              "CredentialType": {
+                "description": "The robot credentials type (Default/ SmartCard)",
+                "enum": [
+                  "Default",
+                  "SmartCard",
+                  "NCipher",
+                  "SafeNet",
+                  "NoCredential"
+                ],
+                "type": "string",
+                "x-ms-enum": {
+                  "name": "RobotDtoCredentialType",
+                  "modelAsString": false
+                }
+              },
+              "Environments": {
+                "description": "The collection of environments the robot is part of.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/EnvironmentDto"
+                }
+              },
+              "RobotEnvironments": {
+                "description": "The comma separated textual representation of environment names the robot is part of.",
+                "type": "string"
+              },
+              "ExecutionSettings": {
+                "description": "A collection of key value pairs containing execution settings for this robot.",
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "IsExternalLicensed": {
+                "description": "Flag to indicate if the robot uses an external license",
+                "type": "boolean"
+              },
+              "LimitConcurrentExecution": {
+                "description": "Specifies if the robot can be used concurrently on multiple machines",
+                "type": "boolean"
+              },
+              "LastModificationTime": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "LastModifierUserId": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "CreationTime": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "CreatorUserId": {
+                "format": "int64",
+                "type": "integer"
+              },
+              "Id": {
+                "format": "int64",
+                "type": "integer"
+              }
+            }
+          }
+    }
+  }
